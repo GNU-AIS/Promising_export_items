@@ -22,11 +22,12 @@ def main():
     cnt_codes = code_helper.get_cnt_codes()  # 외교부 표준 국가 코드를 리스트로 반환
 
     # 국가코드 리스트에 들어있는 모든 국가를 설정한 변수로 API 요청
-    cnt_does_list = ['US', 'UN']
+    # cnt_does_list = ['US', 'UN']
+    cnt_does_list = cnt_codes
 
     # 년도 범위를 정해서 반복
     start_year = 2016
-    end_year = 2016
+    end_year = 2022
 
     # 응답 데이터를 저장할 리스트
     # items = []
