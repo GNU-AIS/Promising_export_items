@@ -61,7 +61,7 @@ def response_xml_parsing(content):
             # print(item)
             items.append(item)
     else:
-        print('결과 코드: ', result_code, '\n결과 메시지: ', result_msg)
+        print('결과 코드: ', result_code, '결과 메시지: ', result_msg)
 
     return items
 

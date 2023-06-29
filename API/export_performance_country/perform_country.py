@@ -22,7 +22,7 @@ def main():
     cnt_codes = code_helper.get_cnt_codes()  # 외교부 표준 국가 코드를 리스트로 반환
 
     # 국가코드 리스트에 들어있는 모든 국가를 설정한 변수로 API 요청
-    cnt_does_list = ['US']
+    cnt_does_list = ['US', 'UN']
 
     # 년도 범위를 정해서 반복
     start_year = 2016
@@ -48,6 +48,8 @@ def get_export_items(cnt_does_list, start_year, end_year):
     """API 요청을 위한 제너레이터"""
 
     for country_code in cnt_does_list:
+        print(f'\n현재 요청 중인 나라 코드 {country_code}')
+
         for now_year in range(start_year, end_year + 1):
 
             start_month = str(now_year) + '01'  # 시작월
