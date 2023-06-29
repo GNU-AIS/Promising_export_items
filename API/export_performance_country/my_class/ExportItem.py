@@ -24,5 +24,12 @@ class ExportItem:
         self.impDlr = impDlr
         self.balPayments = balPayments
 
+    def __repr__(self):
+        return (f"ExportItem(year={self.year}, statCdCntnKor1={self.statCdCntnKor1}, statCd={self.statCd}, "
+                f"statKor={self.statKor}, hsCd={self.hsCd}, expWgt={self.expWgt}, expDlr={self.expDlr}, "
+                f"impWgt={self.impWgt}, impDlr={self.impDlr}, balPayments={self.balPayments})")
+
+
+
 
 
