@@ -13,7 +13,7 @@ class CountryCodeHelper:
         """
 
         self._path = path
-        self._df = pd.read_csv(self._path, encoding='euc-kr')
+        self._df = pd.read_csv(self._path, encoding='utf-8', keep_default_na=False)
 
         # continent 대륙 -> count
         # country 국가 -> cnt
@@ -22,8 +22,11 @@ class CountryCodeHelper:
             in self._df.values}
 
     def get_cnt_codes(self):
-        """ 국가 코드를 리스트로 반환합니다. """
-        return self._country_codes.keys()
+        """
+        국가 코드를 리스트로 반환합니다.
+        :return list: 국가코드 리스트 반환
+        """
+        return list(self._country_codes.keys())
 
     def get_cnt_datas(self):
         """ 파싱된 국가코드를 딕셔너리로 반환합니다. """

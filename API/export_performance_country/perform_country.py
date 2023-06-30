@@ -7,6 +7,7 @@
 import requests
 from datetime import datetime
 from tqdm import tqdm
+import time
 
 # 클래스, 모듈 추가
 from my_class.ExportItem import ExportItem
@@ -22,8 +23,14 @@ def main():
     cnt_codes = code_helper.get_cnt_codes()  # 외교부 표준 국가 코드를 리스트로 반환
 
     # 국가코드 리스트에 들어있는 모든 국가를 설정한 변수로 API 요청
-    # cnt_does_list = ['US', 'UN']
-    cnt_does_list = cnt_codes
+    #cnt_does_list = ['BW']
+
+
+    # 시작할 국가코드 설정 코드
+    start_cnt_code = ['JP', 'JP']
+    start_index = cnt_codes.index(start_cnt_code[0])
+    end_index = cnt_codes.index(start_cnt_code[1])
+    cnt_does_list = cnt_codes[start_index:end_index + 1]
 
     # 년도 범위를 정해서 반복
     start_year = 2016
@@ -48,8 +55,10 @@ def main():
 def get_export_items(cnt_does_list, start_year, end_year):
     """API 요청을 위한 제너레이터"""
 
-    for country_code in cnt_does_list:
+    except_flag = False
+    for country_code in tqdm(cnt_does_list):
         print(f'\n현재 요청 중인 나라 코드 {country_code}')
+        time.sleep(1)
 
         for now_year in range(start_year, end_year + 1):
 
@@ -60,13 +69,24 @@ def get_export_items(cnt_does_list, start_year, end_year):
 
             # 요청 변수를 url 유틸함수를 통해 대입 하여 url을 받고 api 요청
             request_url = get_request_url(get_uid(), start_month, end_month, hs_sgn, cnt_cd)
-            response = requests.get(request_url)
 
-            if response.status_code == 200:
-                yield from response_xml_parsing(response.content)
-            else:
-                print(response.status_code)
-                print(response.text)
+            try:
+                response = requests.get(request_url)
+
+                if response.status_code == 200:
+                    yield from response_xml_parsing(response.content)
+                else:
+                    print(response.status_code)
+                    print(response.text)
+
+                response.raise_for_status()
+            except requests.exceptions.RequestException as e:
+                print(f"Error occurred: {e}")
+                except_flag = True
+                break
+
+        if except_flag:
+            break
 
 
 if __name__ == "__main__":

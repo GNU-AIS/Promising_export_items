@@ -27,7 +27,7 @@ def response_xml_parsing(content):
 
     if result_code == '00':
         # 정상 코드
-
+        print('\n', result_code, result_msg)
         for item_element in root.xpath('//item'):
             hsCd = item_element.findtext('hsCd')
 
@@ -61,7 +61,8 @@ def response_xml_parsing(content):
             # print(item)
             items.append(item)
     else:
-        print('결과 코드: ', result_code, '결과 메시지: ', result_msg)
+        if result_code is not None and result_msg is not None:
+            print('\n결과 코드: ', result_code, '결과 메시지: ', result_msg)
 
     return items
 
