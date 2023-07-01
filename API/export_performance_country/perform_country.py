@@ -27,10 +27,11 @@ def main():
 
 
     # 시작할 국가코드 설정 코드
-    start_cnt_code = ['JP', 'JP']
+    start_cnt_code = ['VE', 'BW']
     start_index = cnt_codes.index(start_cnt_code[0])
     end_index = cnt_codes.index(start_cnt_code[1])
     cnt_does_list = cnt_codes[start_index:end_index + 1]
+    print(cnt_does_list)
 
     # 년도 범위를 정해서 반복
     start_year = 2016
@@ -58,10 +59,8 @@ def get_export_items(cnt_does_list, start_year, end_year):
     except_flag = False
     for country_code in tqdm(cnt_does_list):
         print(f'\n현재 요청 중인 나라 코드 {country_code}')
-        time.sleep(1)
 
         for now_year in range(start_year, end_year + 1):
-
             start_month = str(now_year) + '01'  # 시작월
             end_month = str(now_year) + '12'  # 종료월
             hs_sgn = ''  # 참고 hs 코드 (없어도 됨)
@@ -72,6 +71,7 @@ def get_export_items(cnt_does_list, start_year, end_year):
 
             try:
                 response = requests.get(request_url)
+                time.sleep(1)
 
                 if response.status_code == 200:
                     yield from response_xml_parsing(response.content)

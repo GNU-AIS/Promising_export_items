@@ -10,4 +10,4 @@ def get_uid():
     """
     :return: UID 반환
     """
-    return UID_DH
+    return UID_JH
